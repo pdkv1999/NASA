@@ -41,7 +41,7 @@ const Register = () => {
     }
     try {
       const response = await axios.post(
-        "https://nasa-fa23.onrender.com/api/users/register",
+        "https://nasa-dp3s.onrender.com/api/users/register",
         {
           firstName,
           lastName,
