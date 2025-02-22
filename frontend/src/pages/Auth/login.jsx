@@ -30,7 +30,7 @@ const Login = () => {
     }
     try {
       const response = await axios.post(
-        "https://nasa-dp3s.onrender.com/api/users/login",
+        "http://nasa-dp3s.onrender.com/api/users/login",
         {
           email,
           password,
