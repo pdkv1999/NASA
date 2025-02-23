@@ -54,10 +54,13 @@ const Login = () => {
         alert("Failed to login user");
       }
     } catch (error) {
-      toast.error(
-        "An error occurred while loggging in. Please try again later."
-      );
-    }
+      if (error.response) {
+        console.error("Error response:", error.response);
+      } else {
+        console.error("Error:", error.message);
+      }
+      toast.error("An error occurred. Please try again later.");
+   }   
   };
 
   return (
