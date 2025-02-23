@@ -70,7 +70,7 @@ const Register = () => {
         loop
         playsInline
       >
-        <source src="/SolarSystem.mp4" type="video/mp4" />
+        <source src="/SolarSystem.webm" type="video/webm" />
       </video>
       <div className="absolute w-full h-full flex items-center justify-center z-10">
         <div

@@ -88,7 +88,7 @@ const EarthImage = () => {
       ) : (
         <div className="flex flex-col items-center">
           <h1 className="text-center text-3xl font-semibold whitespace-nowrap">
-            Earth Wonders
+          Near Earth Object Web Service
           </h1>
           <br />
           <p className="lg:text-lg md:text-base px-4 text-gray-700 mb-8 text-center">

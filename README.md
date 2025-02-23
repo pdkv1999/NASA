@@ -1,59 +1,59 @@
-# Astro Data Hub
+# Cosmic Explorer
 
-Astro Data Hub is a web application that leverages NASA APIs to provide users with various astronomical data and imagery. Users can register an account, log in, and access different features of the application including Astronomy Picture of the Day (APOD), Mars Rover Photos, EPIC (Earth Polychromatic Imaging Camera), and Earth APIs.
+Cosmic Explorer is a web-based application that utilizes NASA APIs to deliver a range of astronomical data and stunning imagery. Users can create an account, sign in, and explore various features such as the Astronomy Picture of the Day (APOD), Mars Rover Photos, EPIC (Earth Polychromatic Imaging Camera), and Earth imagery.
 
-You can access the web application using the following link:
-[https://nasa-snowy.vercel.app/](https://nasa-snowy.vercel.app/)
+You can access the live application here: [Cosmic Explorer](https://nasa-snowy.vercel.app/)
 
-## Features
+## Key Features
 ### User Authentication
-- Users need to create an account and log in to access the NASA API pages.
-- User authentication is implemented on the backend using Node.js and MongoDB for storing user data securely.
+- Users must register and log in to access NASA API-powered content.
+- Authentication is implemented using Node.js and MongoDB, ensuring secure storage of user credentials.
 
-### Pages
-1. Mars Rover Photos
-   Displays photos captured by Mars rovers with pagination to navigate through the images.
-2. APOD Viewer (Astronomy Picture of the Day)
-   Users can view the astronomy picture of the day and search for images for a specific date range.
-3. Earth Wonders
-   Allows users to enter valid latitude, longitude, and date to retrieve Earth images.
-4. EPIC Images (Earth Polychromatic Imaging Camera)
-   Displays Earth images captured by the EPIC camera.
+### Available Pages
+1. **Mars Rover Photos**  
+   Explore high-resolution images captured by Mars rovers with easy navigation through paginated content.
+2. **Astronomy Picture of the Day (APOD)**  
+   View NASA's daily featured space image and search for specific dates to explore past images.
+3. **Near Earth Object Web Service**  
+   Retrieve satellite images of Earth by providing latitude, longitude, and date.
+4. **Earth Polychromatic Imaging Camera (EPIC)**  
+   Browse Earth images captured by NASA’s EPIC camera.
 
 ### Frontend
-- Built with Vite React for a fast and efficient development experience.
-- Utilizes React Router for navigation between different pages.
-- Private routes ensure that users must be logged in to access certain pages.
+- Developed with Vite React for optimized performance.
+- React Router is used for seamless navigation across different pages.
+- Protected routes ensure that only authenticated users can access certain features.
 
 ### Backend
-- Developed using Node.js and Express framework.
-- MongoDB is used as the database for storing user information.
-- User authentication is handled using JWT (JSON Web Tokens) for secure access to protected routes.
+- Built using Node.js and Express.
+- MongoDB serves as the database for user data management.
+- Secure authentication is implemented using JWT (JSON Web Tokens) for protected API access.
 
-## Installation
+## Installation Guide
 
-Astro Data Hub requires [Node.js](https://nodejs.org/) to run.
+To run Cosmic Explorer locally, ensure you have [Node.js](https://nodejs.org/) installed.
 
-As the first step clone the Repository:
+### Cloning the Repository
 ```sh
 git clone https://github.com/pdkv1999/NASA.git
+
 ```
-### Backend
+### Setting Up the Backend
 1. After cloning the repository, navigate to backend directory
 ```sh
 cd Backend
+
 ```
-2. Install the dependencies and devDependencies and start the server.
+2. Install required dependencies:
 ```sh
 npm install
 ```
-3. Set up environment variables
+3. Configure environment variables:
 - Create a .env file in the backend directory.
-- Define the following variables
+- Add the following variables:
 ```sh
 PORT=<port_number>
 MONGODB_URL=<mongodb_url>
-ACCESS_TOKEN_SECRET=<secret_key_for_jwt>
 ```
 4. Start the backend server
 ```sh
@@ -61,15 +61,15 @@ npm run dev
 ```
 
 ### Frontend
-1. Navigate to the frontend directory
+1. Move to the frontend directory:
 ```sh
 cd frontend
 ```
-2. Install dependencies
+2. Install dependencies:
 ```sh
 npm install
 ```
-3. Start the frontend development server
+3. Launch the development server:
 ```sh
 npm run dev
 ```
@@ -83,9 +83,9 @@ npm run dev
 - Request body
 ```sh
 {
-  "firstName": "John",
-  "lastName": "Doe",
-  "email": "john.doe@example.com",
+  "firstName": "Dileep",
+  "lastName": "Kumar",
+  "email": "dileep.kumar@example.com",
   "password": "password"
 }
 ```
@@ -94,30 +94,18 @@ npm run dev
 - Request body
 ```sh
 {
-  "email": "john.doe@example.com",
+  "email": "dileep.kumar@example.com",
   "password": "password"
 }
-```
-### Testing
-
-1. Unit Testing with Jest:
-Unit test cases are under "unitTesting folder". To run the test, simply you have to give the command as below. 
-```sh
-npm test <Unit-test-file-name>.test.js
-```
-2. Integration Testing with Jest:
-Integration test cases are under "integrationTesting folder". To run the test, simply you have to give the command as below. 
-```sh
-npm test <Integration-test-file-name>.test.js
 ```
 
 ### Contributing
 
-Contributions are welcome! Please follow the standard guidelines:
+We welcome contributions! To contribute:
 - Fork the repository.
 - Create a new branch (git checkout -b feature/new-feature).
 - Commit your changes (git commit -am 'Add new feature').
 - Push to the branch (git push origin feature/new-feature).
 - Create a new Pull Request.
 
-Happy Coding :)
+Happy Learning :)
