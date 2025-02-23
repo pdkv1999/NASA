@@ -39,10 +39,7 @@ const Home = () => {
           Explore the Universe with NASA API
         </h1>
         <p className="my-6 max-w-2xl text-center text-base leading-relaxed md:text-lg md:leading-relaxed">
-          Dive into the cosmos and discover the wonders of space through our
-          Astro Data Hub - A NASA API web application. From breathtaking imagery
-          captured by telescopes to detailed data on celestial bodies, embark on
-          a journey to expand your cosmic knowledge.
+        Embark on an interstellar journey with Cosmic Explorer – a NASA API-powered web application. Dive into mesmerizing space imagery, explore celestial phenomena, and uncover detailed insights about the universe, all at your fingertips! 🚀✨
         </p>
         <motion.button
           style={{

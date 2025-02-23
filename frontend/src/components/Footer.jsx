@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="flex flex-col lg:flex-row justify-between items-center">
           <div className="mb-4 lg:mb-0 lg:mr-4">
             <p className="dark:text-gray-200">
-              © 2024 Astro Data Hub. All rights reserved.
+              © 2025 Cosmic Explorer. All rights reserved.
             </p>
           </div>
           <div>
