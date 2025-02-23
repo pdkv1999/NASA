@@ -3,7 +3,7 @@
 Astro Data Hub is a web application that leverages NASA APIs to provide users with various astronomical data and imagery. Users can register an account, log in, and access different features of the application including Astronomy Picture of the Day (APOD), Mars Rover Photos, EPIC (Earth Polychromatic Imaging Camera), and Earth APIs.
 
 You can access the web application using the following link:
-[https://nasa-lyart-kappa.vercel.app/](https://nasa-lyart-kappa.vercel.app/)
+[https://nasa-snowy.vercel.app/](https://nasa-snowy.vercel.app/)
 
 ## Features
 ### User Authentication
