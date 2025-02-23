@@ -2,6 +2,7 @@ import { Stars } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import React, { useEffect } from "react";
 import { FiArrowRight } from "react-icons/fi";
+import spaceImage from '/nasa1.jpg'; 
 import {
   useMotionTemplate,
   useMotionValue,
@@ -9,7 +10,7 @@ import {
   animate,
 } from "framer-motion";
 
-const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
+const COLORS_TOP = ["#00FFCC", "#2E6AC6", "#B888D1", "#DD4455"];
 
 const Home = () => {
   const color = useMotionValue(COLORS_TOP[0]);
@@ -17,29 +18,30 @@ const Home = () => {
   useEffect(() => {
     animate(color, COLORS_TOP, {
       ease: "easeInOut",
-      duration: 10,
+      duration: 12,
       repeat: Infinity,
-      repeatType: "mirror",
+      repeatType: "reverse",
     });
   }, []);
 
-  const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 50%, ${color})`;
-  const border = useMotionTemplate`1px solid ${color}`;
-  const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
+  const backgroundImage = useMotionTemplate`url(${spaceImage})`;
+  //const backgroundImage = useMotionTemplate`radial-gradient(140% 140% at 50% 0%, #111B28 60%, ${color})`;
+  const border = useMotionTemplate`2px solid ${color}`;
+  const boxShadow = useMotionTemplate`0px 6px 30px ${color}`;
 
   return (
     <motion.section
       style={{
         backgroundImage,
       }}
-      className="relative grid min-h-screen place-content-center overflow-hidden bg-gray-950 px-4 py-24 text-gray-200"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gray-950 px-6 py-20 text-gray-200"
     >
       <div className="relative z-10 flex flex-col items-center">
-        <h1 className="max-w-3xl bg-gradient-to-br from-white to-gray-400 bg-clip-text text-center text-3xl font-medium leading-tight text-transparent sm:text-5xl sm:leading-tight md:text-7xl md:leading-tight">
-        Unveil the Cosmos with NASA's Infinite Insights
+      <h1 className="max-w-3xl text-center text-4xl font-bold leading-tight text-white">
+      Discover the Infinite Wonders of the Universe
         </h1>
-        <p className="my-6 max-w-2xl text-center text-base leading-relaxed md:text-lg md:leading-relaxed">
-        Embark on an interstellar journey with Cosmic Explorer – a NASA API-powered web application. Dive into mesmerizing space imagery, explore celestial phenomena, and uncover detailed insights about the universe, all at your fingertips! 🚀✨
+        <p className="my-8 max-w-2xl text-center text-lg leading-relaxed md:text-xl md:leading-relaxed">
+          Join us on an extraordinary cosmic journey! Explore stunning space imagery, dive deep into astronomical phenomena, and uncover the mysteries of the universe with our NASA-powered space exploration app. 🚀🌌
         </p>
         <motion.button
           style={{
@@ -47,24 +49,26 @@ const Home = () => {
             boxShadow,
           }}
           whileHover={{
-            scale: 1.015,
+            scale: 1.05,
+            backgroundColor: "#1e1e1e",
           }}
           whileTap={{
-            scale: 0.985,
+            scale: 0.97,
           }}
-          className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/10 px-4 py-2 text-gray-50 transition-colors hover:bg-gray-950/50"
+          className="group relative flex items-center gap-2 rounded-full bg-gradient-to-r from-gray-700/80 to-gray-800/50 px-6 py-3 text-white transition-all"
         >
-          Embark Now
-          <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
+          Start Your Journey
+          <FiArrowRight className="transition-transform group-hover:rotate-45 group-active:rotate-12" />
         </motion.button>
       </div>
 
       <div className="absolute inset-0 z-0">
         <Canvas>
-          <Stars radius={50} count={2500} factor={4} fade speed={2} />
+          <Stars radius={60} count={3000} factor={3} fade speed={1.5} />
         </Canvas>
       </div>
     </motion.section>
   );
 };
+
 export default Home;
