@@ -3,6 +3,7 @@
 Cosmic Explorer is a web-based application that utilizes NASA APIs to deliver a range of astronomical data and stunning imagery. Users can create an account, sign in, and explore various features such as the Astronomy Picture of the Day (APOD), Mars Rover Photos, EPIC (Earth Polychromatic Imaging Camera), and Earth imagery.
 
 You can access the live application here: [Cosmic Explorer](https://nasa-snowy.vercel.app/)
+vercel account: [vercel](https://vercel.com/dileep-kumar-varma-penmetsas-projects/nasa)
 
 ## Key Features
 ### User Authentication
@@ -27,6 +28,10 @@ You can access the live application here: [Cosmic Explorer](https://nasa-snowy.v
 ### Backend
 - Built using Node.js and Express.
 - MongoDB serves as the database for user data management.
+<img width="1470" alt="image" src="https://github.com/user-attachments/assets/2493417c-9e60-4c36-8d1d-dd61ba669c84" />
+<img width="1470" alt="image" src="https://github.com/user-attachments/assets/c36bddc1-8f24-455c-80d1-1640aa0e677b" />
+
+
 - Secure authentication is implemented using JWT (JSON Web Tokens) for protected API access.
 
 ## Installation Guide
