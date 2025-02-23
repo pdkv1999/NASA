@@ -31,9 +31,9 @@ vercel account: [vercel](https://vercel.com/dileep-kumar-varma-penmetsas-project
 - MongoDB serves as the database for user data management.
 <img width="1470" alt="image" src="https://github.com/user-attachments/assets/2493417c-9e60-4c36-8d1d-dd61ba669c84" />
 <img width="1470" alt="image" src="https://github.com/user-attachments/assets/c36bddc1-8f24-455c-80d1-1640aa0e677b" />
-
-
 - Secure authentication is implemented using JWT (JSON Web Tokens) for protected API access.
+<img width="1126" alt="image" src="https://github.com/user-attachments/assets/d4cc85b9-142f-4fb0-8eb7-4b32378aabaa" />
+
 
 ## Installation Guide
 
