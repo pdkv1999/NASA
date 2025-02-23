@@ -11,7 +11,7 @@ You can access the web application using the following link:
 - User authentication is implemented on the backend using Node.js and MongoDB for storing user data securely.
 
 ### Pages
-1. Mars Rover Gallery
+1. Mars Rover Photos
    Displays photos captured by Mars rovers with pagination to navigate through the images.
 2. APOD Viewer (Astronomy Picture of the Day)
    Users can view the astronomy picture of the day and search for images for a specific date range.

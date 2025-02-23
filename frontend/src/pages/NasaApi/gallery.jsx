@@ -106,7 +106,7 @@ const Gallery = () => {
       ) : (
         <div>
           <h1 className="text-center text-2xl lg:text-4xl font-semibold whitespace-nowrap">
-            Mars Rover Photos Gallery
+          Mars Rover Photos
           </h1>
           <br />
           <p className="lg:text-lg md:text-base text-gray-700 mb-8 text-center">

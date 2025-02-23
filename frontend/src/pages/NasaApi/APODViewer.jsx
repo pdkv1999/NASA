@@ -80,9 +80,9 @@ const APODViewer = () => {
       className="container mx-auto px-4 py-8 bg-cover bg-center"
       style={{ backgroundImage: 'url("/background.jpg")' }}
     >
-      <h1 className="text-center text-3xl font-semibold mb-4">APOD Viewer</h1>
+      <h1 className="text-center text-3xl font-semibold mb-4">●	Astronomy Picture of the Day</h1>
       <p className="text-lg text-gray-700 mb-8 text-center">
-        Welcome to our APOD Viewer! Explore captivating snapshots of the cosmos
+        Welcome to our Astronomy Picture of the Day ! Explore captivating snapshots of the cosmos
         captured by NASA's Astronomy Picture of the Day (APOD) service. Each
         day, we present a stunning visual journey through the universe,
         featuring celestial wonders ranging from distant galaxies to mesmerizing

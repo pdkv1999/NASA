@@ -6,7 +6,7 @@ import Gallery from '../pages/NasaApi/gallery';
 // Mocking axios to avoid actual API calls during testing
 jest.mock('axios');
 
-test('renders Mars Rover Photos Gallery heading', async () => {
+test('renders Mars Rover Photos heading', async () => {
   render(<Gallery />);
 
 });
