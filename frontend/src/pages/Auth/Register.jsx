@@ -80,7 +80,7 @@ const Register = () => {
             className={`text-center text-xl sm:text-3xl font-semibold text-black
             }`}
           >
-            Register now and discover the universe
+            Register now
           </h1>
           <div className="w-full mt-8">
             <div className="mx-auto max-w-xs sm:max-w-md md:max-w-lg flex flex-col gap-4">

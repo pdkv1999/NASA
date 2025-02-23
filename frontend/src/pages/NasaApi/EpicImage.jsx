@@ -34,10 +34,10 @@ function Epic() {
         </div>
       ) : (
         <>
-          <h1 className="text-center text-3xl font-semibold whitespace-nowrap">
+          <h1 className="text-center text-3xl font-semibold whitespace-nowrap text-white">
             NASA EPIC Images
           </h1>
-          <p className="lg:text-lg md:text-base text-gray-700 mb-8 text-center mt-4">
+          <p className="lg:text-lg md:text-base text-gray-700 mb-8 text-center mt-4 text-white">
             Explore stunning natural images of Earth captured by NASA's EPIC
             (Earth Polychromatic Imaging Camera) instrument. Dive into a
             mesmerizing collection of photographs showcasing Earth's beauty from

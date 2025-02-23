@@ -87,18 +87,12 @@ const EarthImage = () => {
         </div>
       ) : (
         <div className="flex flex-col items-center">
-          <h1 className="text-center text-3xl font-semibold whitespace-nowrap">
+          <h1 className="text-center text-3xl font-semibold whitespace-nowrap text-white">
           NeoWs
           </h1>
           <br />
-          <p className="lg:text-lg md:text-base px-4 text-gray-700 mb-8 text-center">
-            Discover captivating satellite images of Earth by entering
-            coordinates and selecting a date. This page provides a gateway to
-            breathtaking views from space. Input latitude, longitude, and date
-            to unlock a glimpse of Earth's beauty captured by NASA's satellites.
-            Experience the wonder of our planet from above, and embark on a
-            visual journey like never before. Start exploring now!
-          </p>
+          <p className="lg:text-lg md:text-base px-4 text-gray-700 mb-8 text-center text-white">
+          Discover breathtaking images of Earth taken by NASA's EPIC (Earth Polychromatic Imaging Camera). Explore a stunning collection of photos showcasing our planet’s beauty from space, complete with capture dates, coordinates, and unique perspectives. Embark on a visual journey through the lens of EPIC and experience the awe-inspiring landscapes of Earth.</p>
           <form
             onSubmit={handleSubmit}
             className="flex flex-wrap justify-center"

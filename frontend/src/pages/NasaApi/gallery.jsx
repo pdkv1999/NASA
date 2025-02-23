@@ -105,16 +105,12 @@ const Gallery = () => {
         </div>
       ) : (
         <div>
-          <h1 className="text-center text-2xl lg:text-4xl font-semibold whitespace-nowrap">
-          Mars Rover Photos
+          <h1 className="text-center text-2xl lg:text-4xl font-semibold whitespace-nowrap text-white">
+            Mars Rover Photos
           </h1>
           <br />
-          <p className="lg:text-lg md:text-base text-gray-700 mb-8 text-center">
-            Explore stunning photos captured by NASA's Mars rovers as they
-            journey across the Martian landscape. From breathtaking vistas to
-            close-up shots of geological formations, witness the beauty and
-            wonder of the Red Planet through the lenses of Curiosity and other
-            rovers.
+          <p className="lg:text-lg md:text-base text-white mb-8 text-center">
+            Discover awe-inspiring images captured by NASA's Mars rovers as they traverse the Martian surface. From panoramic views of vast landscapes to detailed close-ups of geological features, experience the Red Planet's beauty and mystery through the eyes of the Curiosity rover and its counterparts.
           </p>
           <div className="mb-4">
             <div className="container mx-auto flex flex-col md:flex-row justify-center items-center">
@@ -197,7 +193,7 @@ const Gallery = () => {
           Previous
         </button>
         <div>
-          <p className="text-xl font-bold">--Page {page}-- </p>
+          <p className="text-xl font-bold text-white">  ~ Page {page} ~</p>
         </div>
         <p></p>
         <button

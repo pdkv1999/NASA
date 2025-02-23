@@ -80,16 +80,14 @@ const APODViewer = () => {
       className="container mx-auto px-4 py-8 bg-cover bg-center"
       style={{ backgroundImage: 'url("/background.jpg")' }}
     >
-      <h1 className="text-center text-3xl font-semibold mb-4">●	Astronomy Picture of the Day</h1>
-      <p className="text-lg text-gray-700 mb-8 text-center">
-        Welcome to our Astronomy Picture of the Day ! Explore captivating snapshots of the cosmos
-        captured by NASA's Astronomy Picture of the Day (APOD) service. Each
-        day, we present a stunning visual journey through the universe,
-        featuring celestial wonders ranging from distant galaxies to mesmerizing
-        phenomena.
-      </p>
+      <h1 className="text-center text-3xl font-semibold mb-4 text-white">
+        Astronomy Picture of the Day
+      </h1>
+      <p className="text-lg text-white mb-8 text-center">
+      Explore the Astronomy Picture of the Day! Discover stunning images from NASA, offering daily glimpses of the universe, from distant galaxies to awe-inspiring celestial wonders.
+</p>
       <div className="mb-6 flex flex-col md:flex-row items-center justify-center">
-        <p className="text-lg font-bold mr-4 mb-2 md:mb-0">
+        <p className="text-lg font-bold mr-4 mb-2 md:mb-0 text-white">
           Search for APOD images by start date and end date:
         </p>
         <input
@@ -120,42 +118,43 @@ const APODViewer = () => {
         </div>
       ) : (
         <div>
-          {apodData.map((apod) => (
-            <div key={apod.date} className="mb-8">
-              <div className={isMobile ? "mb-4" : "flex flex-row mb-4"}>
-                {apod.media_type === "image" ? (
-                  <img
-                    src={apod.url}
-                    alt={apod.title}
-                    className="max-w-full md:max-w-md mb-4 md:mr-4"
-                  />
-                ) : (
-                  <iframe
-                    title={apod.title}
-                    src={apod.url}
-                    frameBorder="0"
-                    allowFullScreen
-                    className="max-w-full md:max-w-md mb-4 md:mr-4"
-                  ></iframe>
-                )}
-                {!isMobile && (
-                  <div>
-                    <p className="text-lg font-semibold mb-2">{apod.title}</p>
-                    <p className="mb-2">{apod.date}</p>
-                    <p>{apod.explanation}</p>
-                  </div>
-                )}
-              </div>
-              {isMobile && (
-                <div>
-                  <p className="text-lg font-semibold mb-2">{apod.title}</p>
-                  <p className="mb-2">{apod.date}</p>
-                  <p>{apod.explanation}</p>
-                </div>
-              )}
-            </div>
-          ))}
+  {apodData.map((apod) => (
+    <div key={apod.date} className="mb-8">
+      <div className={isMobile ? "mb-4" : "flex flex-row mb-4"}>
+        {apod.media_type === "image" ? (
+          <img
+            src={apod.url}
+            alt={apod.title}
+            className="max-w-full md:max-w-md mb-4 md:mr-4"
+          />
+        ) : (
+          <iframe
+            title={apod.title}
+            src={apod.url}
+            frameBorder="0"
+            allowFullScreen
+            className="max-w-full md:max-w-md mb-4 md:mr-4"
+          ></iframe>
+        )}
+        {!isMobile && (
+          <div className="text-white">
+            <p className="text-lg font-semibold mb-2">{apod.title}</p>
+            <p className="mb-2">{apod.date}</p>
+            <p>{apod.explanation}</p>
+          </div>
+        )}
+      </div>
+      {isMobile && (
+        <div className="text-white">
+          <p className="text-lg font-semibold mb-2">{apod.title}</p>
+          <p className="mb-2">{apod.date}</p>
+          <p>{apod.explanation}</p>
         </div>
+      )}
+    </div>
+  ))}
+</div>
+
       )}
     </div>
   );
