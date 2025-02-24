@@ -2,34 +2,37 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-200 border-t border-gray-200 dark:bg-gray-800">
-      <div className="max-w-screen-xl mx-auto py-6 px-4 lg:px-6">
-        <div className="flex flex-col lg:flex-row justify-between items-center">
-          <div className="mb-4 lg:mb-0 lg:mr-4">
-            <p className="dark:text-gray-200">
-              © 2025 Cosmic Explorer. All rights reserved.
+    <footer className="bg-gradient-to-r from-[#FF7E5F] to-[#FEB47B] text-white py-8">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
+          <div className="flex flex-col items-center lg:items-start">
+            <p className="text-lg font-semibold mb-2">
+              © 2025 by Dileep. All rights reserved.
             </p>
+            <p className="text-sm">Exploring the Universe, One Discovery at a Time.</p>
           </div>
-          <div>
-            <ul className="flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-4">
-              <li>
-                <a
-                  href="mailto:pdkv1999@gmail.com"
-                  className="text-gray-800 hover:text-gray-900 dark:hover:text-gray-300"
-                >
-                  Email: pdkv1999@gmail.com
-                </a>
-              </li>
-              <li>
-                <a
-                  href="tel:+353 892234898"
-                  className="text-gray-800 hover:text-gray-900 dark:hover:text-gray-300"
-                >
-                  Phone: +353 892234898
-                </a>
-              </li>
-            </ul>
+
+          <div className="flex flex-col lg:flex-row items-center space-y-4 lg:space-y-0 lg:space-x-8">
+            <div>
+              <a
+                href="mailto:pdkv1999@gmail.com"
+                className="text-white hover:text-gray-200 transition-colors"
+              >
+                <p className="font-medium">Email: pdkv1999@gmail.com</p>
+              </a>
+            </div>
+            <div>
+              <a
+                href="tel:+353892234898"
+                className="text-white hover:text-gray-200 transition-colors"
+              >
+                <p className="font-medium">Phone: +353 892234898</p>
+              </a>
+            </div>
           </div>
+        </div>
+        <div className="mt-6 text-center text-sm">
+          <p>Crafted with ❤️ by Dileep Kumar Varma, Penmetsa</p>
         </div>
       </div>
     </footer>
