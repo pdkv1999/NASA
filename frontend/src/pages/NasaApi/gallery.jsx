@@ -23,7 +23,7 @@ const Gallery = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1); // Total pages based on 9 images per page
+  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -36,9 +36,9 @@ const Gallery = () => {
         );
         setPhotos(response.data.photos);
 
-        // Set total pages based on 9 items per page
-        const total = response.data.photos.length; // Get the total number of photos
-        setTotalPages(Math.ceil(total / ITEMS_PER_PAGE)); // Calculate total pages
+        // Calculate total pages based on the number of photos
+        const total = response.data.photos.length;
+        setTotalPages(Math.ceil(total / ITEMS_PER_PAGE));
       } catch (error) {
         console.error("Error fetching photos:", error);
       } finally {
@@ -66,6 +66,8 @@ const Gallery = () => {
         `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=${searchCamera}&api_key=${VITE_NASA_API_KEY}`
       );
       setSearchResults(response.data.photos);
+      // Calculate total pages based on the number of search results
+      setTotalPages(Math.ceil(response.data.photos.length / ITEMS_PER_PAGE));
     } catch (error) {
       console.error("Error fetching search results:", error);
     } finally {
@@ -87,6 +89,7 @@ const Gallery = () => {
     setSearchCamera("");
     setSearchResults([]);
     setPage(1); // Reset to first page when clearing the selection
+    setTotalPages(1); // Reset total pages when clearing the selection
   };
 
   const nextPage = () => setPage((prev) => Math.min(prev + 1, totalPages));
