@@ -65,7 +65,7 @@ const EarthImage = () => {
             Discover breathtaking images of Earth taken by NASA's EPIC camera. Explore stunning photos of our planet from space.
             </p>
             <br/>
-            <p>
+            <p className="text-center text-lg text-white mb-8 px-4">
             Use the sample data like latitude -6.36, longitude 176.40, and date 23/02/2025, then click "Show Image" to view the results.
             Click on the "Earth Polychromatic Imaging Camera" tab to find all latitude and longitude details, then copy and paste them into NEOWS to try.
           </p>
