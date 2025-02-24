@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 
 dotenv.config();
-const URL = "mongodb+srv://124116108:2GX4qsf4uHUGT09e@dileep-nasa-api.xwdqi.mongodb.net/?retryWrites=true&w=majority&appName=Dileep-NASA-API";
+const URL = process.env.MONGODB_URL;
 
 const databaseConnection = () => {
   mongoose.connect(URL);
