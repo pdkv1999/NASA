@@ -106,7 +106,7 @@ describe('User API', () => {
         .expect(200); // Expect HTTP 200 for successful login
 
       expect(response.body.success).toBe(true);
-      expect(response.body.message).toBe('Login successful');
+      expect(response.body.message).toBe('login successfully');
       expect(response.body.user).toHaveProperty('email', loginData.email);
       expect(response.body.token).toBeDefined(); // Ensure token is returned
     });
