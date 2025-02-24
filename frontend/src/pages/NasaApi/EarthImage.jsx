@@ -85,7 +85,7 @@ const EarthImage = () => {
               onChange={(e) => setDate(e.target.value)}
               className="border px-4 py-2 rounded-md mr-2 mb-2"
             />
-            <button type="submit" className="bg-[#9933FF] hover:bg-[#BF40BF] text-white px-4 py-2 rounded-md">
+            <button type="submit" className="bg-[#FEB47B] hover:bg-[#00B5B8] text-white px-4 py-2 rounded-md">
               Show Image
             </button>
           </form>

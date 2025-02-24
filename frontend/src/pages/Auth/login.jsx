@@ -84,8 +84,8 @@ const Login = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="mt-5 tracking-wide font-semibold bg-[#9933FF] text-gray-100 w-full py-4 rounded-lg hover:bg-[#BF40BF]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-              >
+                className="mt-5 tracking-wide font-semibold bg-gradient-to-r from-[#FF7E5F] to-[#FEB47B] text-gray-100 w-full py-4 rounded-lg hover:bg-gradient-to-r hover:from-[#FEB47B] hover:to-[#FF7E5F] transition-all duration-300 ease-in-out flex items-center justify-center"
+                >
                 <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
                   <circle cx="8.5" cy="7" r="4" />
@@ -97,7 +97,7 @@ const Login = () => {
               {/* Register Link */}
               <p className="mt-6 text-xs text-gray-600 text-center">
                 Already have an account?{" "}
-                <a href="/register" className="text-[#9933FF] font-semibold">
+                <a href="/register" className="text-[#FEB47B] font-semibold">
                   Register
                 </a>
               </p>

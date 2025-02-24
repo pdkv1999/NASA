@@ -4,6 +4,7 @@ import { validateEmail, validatePassword } from "../../utils/commonFunctions";
 import axios from "axios";
 import { toast } from 'react-toastify';
 import { Eye, EyeOff } from "lucide-react";
+import { FaSpinner } from 'react-icons/fa';  // For the loading spinner
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -13,6 +14,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);  // Add loading state
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
 
@@ -42,10 +44,13 @@ const Register = () => {
     }
 
     try {
+      setLoading(true);  // Set loading to true when the request starts
       const response = await axios.post(
         "https://nasa-dp3s.onrender.com/api/users/register",
         { firstName, lastName, email, password }
       );
+      setLoading(false);  // Set loading to false when the request is complete
+
       if (response.data.success) {
         toast.success("User registered successfully");
         navigate("/login");
@@ -53,6 +58,7 @@ const Register = () => {
         toast.error("Failed to register user");
       }
     } catch (error) {
+      setLoading(false);  // Set loading to false in case of an error
       toast.error("Error registering user:", error);
       alert("An error occurred while registering. Please try again later.");
     }
@@ -139,27 +145,35 @@ const Register = () => {
                 </button>
               </div>
 
-              <button
-                className="mt-5 tracking-wide font-semibold bg-[#9933FF] text-gray-100 w-full py-4 rounded-lg hover:bg-[#BF40BF]/90 transition-all duration-300 ease-in-out flex items-center justify-center"
-                onClick={handleSubmit}
-              >
-                <svg
-                  className="w-6 h-6 -ml-2"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+              {/* Loading Spinner and Message */}
+              {loading ? (
+                <div className="flex justify-center items-center space-x-2 mt-4">
+                  <FaSpinner className="animate-spin text-xl" />
+                  <span>Please wait while registering the user...</span>
+                </div>
+              ) : (
+                <button
+                  className="mt-5 tracking-wide font-semibold bg-gradient-to-r from-[#FF7E5F] to-[#FEB47B] text-gray-100 w-full py-4 rounded-lg hover:bg-gradient-to-r hover:from-[#FEB47B] hover:to-[#FF7E5F] transition-all duration-300 ease-in-out flex items-center justify-center"
+                  onClick={handleSubmit}
                 >
-                  <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                  <circle cx="8.5" cy="7" r="4" />
-                  <path d="M20 8v6M23 11h-6" />
-                </svg>
-                <span className="ml-3">Register</span>
-              </button>
+                  <svg
+                    className="w-6 h-6 -ml-2"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                    <circle cx="8.5" cy="7" r="4" />
+                    <path d="M20 8v6M23 11h-6" />
+                  </svg>
+                  <span className="ml-3">Register</span>
+                </button>
+              )}
               <p className="mt-6 text-xs text-gray-600 text-center">
                 Already have an account?{" "}
-                <a href="/login" className="text-[#9933FF] font-semibold">Login</a>
+                <a href="/login" className="text-[#FEB47B] font-semibold">Login</a>
               </p>
             </div>
           </div>
