@@ -26,7 +26,7 @@ const Header = () => {
     <header>
       <nav class="bg-gray-200 border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
-          <a href="#" className="flex items-center">
+          <a href="/" className="flex items-center">
             <img src="/nasa.png" className="mr-3 h-6 sm:h-9" alt="Nasa Logo" />
             <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
             Cosmic Explorer
@@ -76,15 +76,6 @@ const Header = () => {
             } lg:block lg:order-1 w-full lg:w-auto`}
           >
             <ul className="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-              <li>
-                <a
-                  href="/"
-                  className="block py-2 pr-4 pl-3 text-white rounded bg-[#9933FF] lg:bg-transparent lg:text-[#9933FF] lg:p-0 dark:text-white"
-                  aria-current="page"
-                >
-                  Home
-                </a>
-              </li>
               <li>
                 <a
                   href="/gallery"
