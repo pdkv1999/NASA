@@ -37,7 +37,7 @@ function Epic() {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {images.map((image) => (
-              <div key={image.identifier} className="bg-white p-4 rounded-lg shadow-md transform hover:rotate-6 transition duration-300">
+              <div key={image.identifier} className="bg-white p-4 rounded-lg shadow-md overflow-hidden transform hover:scale-110 transition duration-300">
                 <img
                   src={`https://epic.gsfc.nasa.gov/archive/natural/${image.date.slice(0, 4)}/${image.date.slice(5, 7)}/${image.date.slice(8, 10)}/png/${image.image}.png`}
                   alt={`EPIC Image on ${image.date}`}
