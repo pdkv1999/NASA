@@ -10,6 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
+  const [loading, setLoading] = useState(false); // State for loading
   const navigate = useNavigate();
   const { setIsLoggedIn } = useAuth();
   axios.defaults.withCredentials = true;
@@ -21,8 +22,12 @@ const Login = () => {
     if (!validatePassword(password))
       return toast.error("Password must be at least 8 characters with an uppercase letter, special character, and number");
 
+    setLoading(true); // Set loading to true when the request starts
+
     try {
       const { data } = await axios.post("https://nasa-dp3s.onrender.com/api/users/login", { email, password });
+
+      setLoading(false); // Set loading to false when the request is completed
 
       if (data.success) {
         toast.success("User logged in successfully");
@@ -34,6 +39,7 @@ const Login = () => {
         toast.error("Failed to login user");
       }
     } catch (error) {
+      setLoading(false); // Set loading to false in case of error
       console.error("Login error:", error.response || error.message);
       toast.error("An error occurred. Please try again later.");
     }
@@ -85,13 +91,22 @@ const Login = () => {
               <button
                 type="submit"
                 className="mt-5 tracking-wide font-semibold bg-gradient-to-r from-[#FF7E5F] to-[#FEB47B] text-gray-100 w-full py-4 rounded-lg hover:bg-gradient-to-r hover:from-[#FEB47B] hover:to-[#FF7E5F] transition-all duration-300 ease-in-out flex items-center justify-center"
-                >
-                <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                  <circle cx="8.5" cy="7" r="4" />
-                  <path d="M20 8v6M23 11h-6" />
-                </svg>
-                <span className="ml-3">Login</span>
+                disabled={loading} // Disable the button while loading
+              >
+                {loading ? (
+                  <svg className="w-6 h-6 animate-spin" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                    <circle cx="8.5" cy="7" r="4" />
+                    <path d="M20 8v6M23 11h-6" />
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6 -ml-2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                    <circle cx="8.5" cy="7" r="4" />
+                    <path d="M20 8v6M23 11h-6" />
+                  </svg>
+                )}
+                <span className="ml-3">{loading ? "Logging in..." : "Login"}</span>
               </button>
 
               {/* Register Link */}
