@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { validateEmail, validatePassword } from "../../utils/commonFunctions";
 import axios from "axios";
 import { toast } from 'react-toastify';
+import { Eye, EyeOff } from "lucide-react";
 
 const Register = () => {
   const [firstName, setFirstName] = useState("");
@@ -10,8 +11,14 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
+
+  const togglePasswordVisibility = () => setShowPassword(!showPassword);
+  const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,25 +36,15 @@ const Register = () => {
       );
       return;
     }
-    if (!validatePassword(confirmPassword)) {
-      toast.error(
-        "Password must be at least 8 characters long and contain at least one uppercase letter, one special character, and one number"
-      );
-      return;
-    }
-    if (password != confirmPassword) {
+    if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
+
     try {
       const response = await axios.post(
         "https://nasa-dp3s.onrender.com/api/users/register",
-        {
-          firstName,
-          lastName,
-          email,
-          password,
-        }
+        { firstName, lastName, email, password }
       );
       if (response.data.success) {
         toast.success("User registered successfully");
@@ -73,23 +70,15 @@ const Register = () => {
         <source src="/SolarSystem.webm" type="video/webm" />
       </video>
       <div className="absolute w-full h-full flex items-center justify-center z-10">
-        <div
-          className={`xl:max-w-2xl bg-white w-full p-5 sm:p-8 rounded-md`}
-        >
-          <h1
-            className={`text-center text-xl sm:text-3xl font-semibold text-black
-            }`}
-          >
-            Register now
-          </h1>
+        <div className="xl:max-w-2xl bg-white w-full p-5 sm:p-8 rounded-md">
+          <h1 className="text-center text-xl sm:text-3xl font-semibold text-black">Register now</h1>
           <div className="w-full mt-8">
             <div className="mx-auto max-w-xs sm:max-w-md md:max-w-lg flex flex-col gap-4">
               <div className="flex flex-col sm:flex-row gap-3">
                 <input
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none  focus:border-2  focus:outline bg-gray-100 text-black focus:border-black
-                  }`}
+                  className="w-full px-5 py-3 rounded-lg border-2 bg-gray-100 text-black focus:border-black"
                   type="text"
                   placeholder="Your first name"
                   required
@@ -97,8 +86,7 @@ const Register = () => {
                 <input
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  className={`w-full px-5 py-3 rounded-lg  font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2  focus:outline bg-gray-100 text-black focus:border-black
-                  }`}
+                  className="w-full px-5 py-3 rounded-lg border-2 bg-gray-100 text-black focus:border-black"
                   type="text"
                   placeholder="Your last name"
                   required
@@ -107,33 +95,52 @@ const Register = () => {
               <input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`w-full px-5 py-3 rounded-lg  font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2  focus:outline bg-gray-100 text-black focus:border-black
-                }`}
+                className="w-full px-5 py-3 rounded-lg border-2 bg-gray-100 text-black focus:border-black"
                 type="email"
                 placeholder="Enter your email"
                 required
               />
-              <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={`w-full px-5 py-3 rounded-lg  font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2  focus:outline bg-gray-100 text-black focus:border-black
-                }`}
-                type="password"
-                placeholder="Enter your password"
-                required
-              />
 
-              <input
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                className={`w-full px-5 py-3 rounded-lg  font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2  focus:outline bg-gray-100 text-black focus:border-black
-                }`}
-                type="password"
-                placeholder="Confirm your password"
-                required
-              />
+              {/* Password Field */}
+              <div className="relative">
+                <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-5 py-3 rounded-lg border-2 bg-gray-100 text-black focus:border-black pr-10"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="Enter your password"
+                  required
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-600"
+                  onClick={togglePasswordVisibility}
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+
+              {/* Confirm Password Field */}
+              <div className="relative">
+                <input
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="w-full px-5 py-3 rounded-lg border-2 bg-gray-100 text-black focus:border-black pr-10"
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="Confirm your password"
+                  required
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-3 flex items-center text-gray-600"
+                  onClick={toggleConfirmPasswordVisibility}
+                >
+                  {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+              </div>
+
               <button
-                className="mt-5 tracking-wide font-semibold bg-[#9933FF] text-gray-100 w-full py-4 rounded-lg hover:bg-[#BF40BF]/90 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
+                className="mt-5 tracking-wide font-semibold bg-[#9933FF] text-gray-100 w-full py-4 rounded-lg hover:bg-[#BF40BF]/90 transition-all duration-300 ease-in-out flex items-center justify-center"
                 onClick={handleSubmit}
               >
                 <svg
@@ -152,9 +159,7 @@ const Register = () => {
               </button>
               <p className="mt-6 text-xs text-gray-600 text-center">
                 Already have an account?{" "}
-                <a href="/login">
-                  <span className="text-[#9933FF] font-semibold">Login</span>
-                </a>
+                <a href="/login" className="text-[#9933FF] font-semibold">Login</a>
               </p>
             </div>
           </div>
@@ -163,4 +168,5 @@ const Register = () => {
     </div>
   );
 };
+
 export default Register;

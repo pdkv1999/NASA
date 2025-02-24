@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import ClearIcon from "@mui/icons-material/Clear";
 import VITE_NASA_API_KEY from "../../config/apiConfig";
 
 const options = {
@@ -44,14 +43,13 @@ const Gallery = () => {
   }, [page]);
 
   useEffect(() => {
-    const closeDropdown = (event) => {
+    const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
-
-    document.addEventListener("click", closeDropdown);
-    return () => document.removeEventListener("click", closeDropdown);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleSearch = async () => {
@@ -68,7 +66,7 @@ const Gallery = () => {
     }
   };
 
-  const toggleDropDown = () => setIsOpen(!isOpen);
+  const toggleDropDown = () => setIsOpen((prev) => !prev);
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -82,95 +80,77 @@ const Gallery = () => {
     setSearchResults([]);
   };
 
-  const nextPage = () => setPage(page + 1);
-  const prevPage = () => setPage(page - 1);
+  const nextPage = () => setPage((prev) => prev + 1);
+  const prevPage = () => setPage((prev) => Math.max(1, prev - 1));
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-cover bg-center" style={{ backgroundImage: 'url("/background.jpg")' }}>
+    <div className="container mx-auto px-4 py-8">
       {loading ? (
         <div className="flex justify-center items-center h-screen">
-          <div className="rounded-full h-20 w-20 bg-[#9933FF] animate-ping"></div>
+          <div className="rounded-full h-20 w-20 bg-purple-500 animate-ping"></div>
         </div>
       ) : (
         <div>
-          <h1 className="text-center text-2xl lg:text-4xl font-semibold text-white">Mars Rover Photos</h1>
-          <p className="lg:text-lg text-white mb-8 text-center">
-            Discover awe-inspiring images captured by NASA's Mars rovers as they traverse the Martian surface.
+          <h1 className="text-center text-2xl lg:text-4xl font-semibold">Mars Rover Photos</h1>
+          <p className="lg:text-lg mb-8 text-center">
+            Discover images captured by NASA's Mars rovers on the Martian surface.
           </p>
-          <div className="mb-4">
-            <div className="container mx-auto flex flex-col md:flex-row justify-center items-center">
-              <div className="relative w-full mb-2 md:w-auto md:mr-2">
-                <input
-                  type="text"
-                  value={options[selectedOption] || searchCamera}
-                  readOnly
-                  placeholder="Select camera"
-                  className="border border-gray-300 rounded-md py-2 px-4 focus:outline-none focus:border-blue-500 w-full md:w-64"
-                  onClick={toggleDropDown}
-                />
-                {isOpen && (
-                  <div className="absolute z-10 mt-2 w-full bg-white rounded-md shadow-lg" ref={dropdownRef}>
-                    <ul className="py-1">
-                      {Object.entries(options).map(([key, value]) => (
-                        <li
-                          key={key}
-                          className="cursor-pointer px-4 py-2 hover:bg-gray-100"
-                          onClick={() => handleOptionClick(key)}
-                        >
-                          {value}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-              </div>
-              <div className="flex flex-col md:flex-row items-center">
-                <button
-                  onClick={handleSearch}
-                  className="bg-[#9933FF] hover:bg-[#BF40BF] text-white font-bold py-2 px-4 rounded-md mb-2 md:mb-0 md:mr-2 focus:outline-none"
-                >
-                  Search
-                </button>
-                <button
-                  onClick={clearSelection}
-                  className="bg-gray-200 hover:bg-gray-400 font-bold py-2 px-4 rounded-md focus:outline-none"
-                >
-                  Clear Search
-                </button>
-              </div>
-            </div>
-          </div>
-          <div className="mx-12 md:mx-2">
-            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-14">
-              {(searchResults.length > 0 ? searchResults : photos).map((photo) => (
-                <div key={photo.id} className="rounded-lg overflow-hidden shadow-lg bg-white">
-                  <img className="w-full h-64 object-cover" src={photo.img_src} alt={photo.id} />
-                  <div className="p-4">
-                    <p className="text-lg font-semibold mb-2">Rover: {photo.camera.full_name}</p>
-                    <p className="text-sm text-gray-700">Date: {photo.earth_date}</p>
-                  </div>
+          <div className="mb-4 flex flex-col md:flex-row justify-center items-center">
+            <div className="relative w-full md:w-64 mb-2 md:mb-0 md:mr-2" ref={dropdownRef}>
+              <input
+                type="text"
+                value={options[selectedOption] || ""}
+                readOnly
+                placeholder="Select camera"
+                className="border border-gray-300 rounded-md py-2 px-4 w-full cursor-pointer"
+                onClick={toggleDropDown}
+              />
+              {isOpen && (
+                <div className="absolute z-10 mt-2 w-full bg-white rounded-md shadow-lg">
+                  <ul className="py-1">
+                    {Object.entries(options).map(([key, value]) => (
+                      <li
+                        key={key}
+                        className="cursor-pointer px-4 py-2 hover:bg-gray-100"
+                        onClick={() => handleOptionClick(key)}
+                      >
+                        {value}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              ))}
+              )}
             </div>
+            <button
+              onClick={handleSearch}
+              className="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-md md:mr-2"
+            >
+              Search
+            </button>
+            <button
+              onClick={clearSelection}
+              className="bg-gray-300 hover:bg-gray-400 font-bold py-2 px-4 rounded-md"
+            >
+              Clear
+            </button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {(searchResults.length > 0 ? searchResults : photos).map((photo) => (
+              <div key={photo.id} className="rounded-lg overflow-hidden shadow-lg bg-white">
+                <img className="w-full h-64 object-cover" src={photo.img_src} alt={photo.id} />
+                <div className="p-4">
+                  <p className="text-lg font-semibold">Rover: {photo.camera.full_name}</p>
+                  <p className="text-sm text-gray-700">Date: {photo.earth_date}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       )}
       <div className="flex justify-center mt-4">
-        <button
-          onClick={prevPage}
-          disabled={page === 1}
-          className="bg-gray-200 hover:bg-gray-300 py-2 px-4 mr-2 rounded"
-        >
-          Previous
-        </button>
-        <p className="text-xl font-bold text-white">~ Page {page} ~</p>
-        <button
-          onClick={nextPage}
-          disabled={page === 4}
-          className="bg-gray-200 hover:bg-gray-300 py-2 px-4 rounded"
-        >
-          Next
-        </button>
+        <button onClick={prevPage} disabled={page === 1} className="bg-gray-300 py-2 px-4 mr-2 rounded">Previous</button>
+        <p className="text-xl font-bold">Page {page}</p>
+        <button onClick={nextPage} disabled={page === 4} className="bg-gray-300 py-2 px-4 ml-2 rounded">Next</button>
       </div>
     </div>
   );
