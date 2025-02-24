@@ -14,6 +14,8 @@ const options = {
   minites: "Miniature Thermal Emission Spectrometer (Mini-TES)",
 };
 
+const ITEMS_PER_PAGE = 6; // Set maximum items per page
+
 const Gallery = () => {
   const [photos, setPhotos] = useState([]);
   const [searchCamera, setSearchCamera] = useState("");
@@ -21,6 +23,7 @@ const Gallery = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1); // Total pages based on 9 images per page
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -32,6 +35,10 @@ const Gallery = () => {
           `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=${page}&api_key=${VITE_NASA_API_KEY}`
         );
         setPhotos(response.data.photos);
+
+        // Set total pages based on 9 items per page
+        const total = response.data.photos.length; // Get the total number of photos
+        setTotalPages(Math.ceil(total / ITEMS_PER_PAGE)); // Calculate total pages
       } catch (error) {
         console.error("Error fetching photos:", error);
       } finally {
@@ -72,16 +79,24 @@ const Gallery = () => {
     setSelectedOption(option);
     setSearchCamera(option);
     setIsOpen(false);
+    setPage(1); // Reset to first page whenever a new camera option is selected
   };
 
   const clearSelection = () => {
     setSelectedOption(null);
     setSearchCamera("");
     setSearchResults([]);
+    setPage(1); // Reset to first page when clearing the selection
   };
 
-  const nextPage = () => setPage((prev) => prev + 1);
+  const nextPage = () => setPage((prev) => Math.min(prev + 1, totalPages));
   const prevPage = () => setPage((prev) => Math.max(1, prev - 1));
+
+  // Calculate images to display on the current page
+  const currentImages = (searchResults.length > 0 ? searchResults : photos).slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE
+  );
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -92,9 +107,8 @@ const Gallery = () => {
       ) : (
         <div>
           <h1 className="text-center text-2xl lg:text-4xl font-semibold">Mars Rover Photos</h1>
-          <p className="lg:text-lg mb-8 text-center">
-            Discover images captured by NASA's Mars rovers on the Martian surface.
-          </p>
+      
+          <br />
           <div className="mb-4 flex flex-col md:flex-row justify-center items-center">
             <div className="relative w-full md:w-64 mb-2 md:mb-0 md:mr-2" ref={dropdownRef}>
               <input
@@ -135,7 +149,7 @@ const Gallery = () => {
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {(searchResults.length > 0 ? searchResults : photos).map((photo) => (
+            {currentImages.map((photo) => (
               <div key={photo.id} className="rounded-lg overflow-hidden shadow-lg bg-white">
                 <img className="w-full h-64 object-cover" src={photo.img_src} alt={photo.id} />
                 <div className="p-4">
@@ -149,8 +163,10 @@ const Gallery = () => {
       )}
       <div className="flex justify-center mt-4">
         <button onClick={prevPage} disabled={page === 1} className="bg-gray-300 py-2 px-4 mr-2 rounded">Previous</button>
-        <p className="text-xl font-bold">Page {page}</p>
-        <button onClick={nextPage} disabled={page === 4} className="bg-gray-300 py-2 px-4 ml-2 rounded">Next</button>
+        <p className="text-xl font-bold">
+          Page {page} of {totalPages}
+        </p>
+        <button onClick={nextPage} disabled={page === totalPages} className="bg-gray-300 py-2 px-4 ml-2 rounded">Next</button>
       </div>
     </div>
   );
