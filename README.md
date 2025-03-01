@@ -1,3 +1,5 @@
+# Requested for NASA API KEY
+<img width="852" alt="image" src="https://github.com/user-attachments/assets/23062d56-770b-457d-a46e-d4a8ce552981" />
 # Cosmic Explorer
 
 Cosmic Explorer is a web-based application that utilizes NASA APIs to deliver a range of astronomical data and stunning imagery. Users can create an account, sign in, and explore various features such as the Astronomy Picture of the Day (APOD), Mars Rover Photos, EPIC (Earth Polychromatic Imaging Camera), and Earth imagery.
