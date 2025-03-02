@@ -12,9 +12,20 @@ const EarthImage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setImageUrl(""); // Clear old image
+    setErrorMessage(""); // Clear previous error message
 
     const lat = parseFloat(latitude);
     const lon = parseFloat(longitude);
+
+    // Check for future date
+    const today = new Date();
+    const selectedDate = new Date(date);
+    if (selectedDate > today) {
+      setErrorMessage("You have selected a future date. Please select a valid date.");
+      setLoading(false);
+      return;
+    }
 
     if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
       setErrorMessage("Invalid latitude (-90 to 90) or longitude (-180 to 180).");
@@ -39,7 +50,6 @@ const EarthImage = () => {
         const contentType = response.headers.get("content-type");
         const data = contentType?.includes("application/json") ? await response.json() : await response.blob();
         setImageUrl(data.url || URL.createObjectURL(data));
-        setErrorMessage("");
       }
     } catch (error) {
       console.error("Error fetching Earth image:", error);
@@ -54,59 +64,58 @@ const EarthImage = () => {
       className="flex flex-col items-center py-10 min-h-screen"
       style={{ backgroundImage: 'url("/background.jpg")', backgroundSize: "cover" }}
     >
-      {loading ? (
-        <div className="flex justify-center items-center h-screen">
+      <div className="flex flex-col items-center">
+        <h1 className="text-center text-3xl font-semibold text-white">NeoWs</h1>
+        <p className="text-center text-lg text-white mb-8 px-4">
+          Discover breathtaking images of Earth taken by NASA's EPIC camera. Explore stunning photos of our planet from space.
+        </p>
+        <br />
+        <p className="text-center text-lg text-white mb-8 px-4">
+          Use the sample data like latitude -6.36, longitude 176.40, and date 2025-02-23, then click "Show Image" to view the results.
+          Click on the "Earth Polychromatic Imaging Camera" tab to find all latitude and longitude details, then copy and paste them into NEOWS to try.
+        </p>
+        <form onSubmit={handleSubmit} className="flex flex-wrap justify-center">
+          <input
+            type="text"
+            placeholder="Latitude"
+            value={latitude}
+            onChange={(e) => setLatitude(e.target.value)}
+            className="border px-4 py-2 rounded-md mr-2 mb-2"
+          />
+          <input
+            type="text"
+            placeholder="Longitude"
+            value={longitude}
+            onChange={(e) => setLongitude(e.target.value)}
+            className="border px-4 py-2 rounded-md mr-2 mb-2"
+          />
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="border px-4 py-2 rounded-md mr-2 mb-2"
+          />
+          <button
+            type="submit"
+            className={`px-4 py-2 rounded-md text-white ${
+              latitude && longitude && date ? "bg-[#FEB47B] hover:bg-[#00B5B8]" : "bg-gray-400 cursor-not-allowed"
+            }`}
+            disabled={!latitude || !longitude || !date} // Disable button if fields are empty
+          >
+            Show Image
+          </button>
+        </form>
+      </div>
+
+      {errorMessage && <p className="text-red-500 text-2xl mt-3 font-bold">{errorMessage}</p>} {/* Increased font size */}
+
+      <div className="mt-5 flex justify-center items-center">
+        {loading ? (
           <div className="rounded-full h-20 w-20 bg-[#9933FF] animate-ping"></div>
-        </div>
-      ) : (
-        <div className="flex flex-col items-center">
-          <h1 className="text-center text-3xl font-semibold text-white">NeoWs</h1>
-          <p className="text-center text-lg text-white mb-8 px-4">
-            Discover breathtaking images of Earth taken by NASA's EPIC camera. Explore stunning photos of our planet from space.
-            </p>
-            <br/>
-            <p className="text-center text-lg text-white mb-8 px-4">
-            Use the sample data like latitude -6.36, longitude 176.40, and date 23/02/2025, then click "Show Image" to view the results.
-            Click on the "Earth Polychromatic Imaging Camera" tab to find all latitude and longitude details, then copy and paste them into NEOWS to try.
-          </p>
-          <form onSubmit={handleSubmit} className="flex flex-wrap justify-center">
-            <input
-              type="text"
-              placeholder="Latitude"
-              value={latitude}
-              onChange={(e) => setLatitude(e.target.value)}
-              className="border px-4 py-2 rounded-md mr-2 mb-2"
-            />
-            <input
-              type="text"
-              placeholder="Longitude"
-              value={longitude}
-              onChange={(e) => setLongitude(e.target.value)}
-              className="border px-4 py-2 rounded-md mr-2 mb-2"
-            />
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="border px-4 py-2 rounded-md mr-2 mb-2"
-            />
-            <button type="submit" className="bg-[#FEB47B] hover:bg-[#00B5B8] text-white px-4 py-2 rounded-md">
-              Show Image
-            </button>
-          </form>
-        </div>
-      )}
-
-      {errorMessage && <p className="text-red-500 mt-2">{errorMessage}</p>}
-
-      {imageUrl && (
-        <img
-          src={imageUrl}
-          alt="Earth"
-          className="mt-5 rounded-md"
-          style={{ maxWidth: "100%", maxHeight: "400px" }}
-        />
-      )}
+        ) : (
+          imageUrl && <img src={imageUrl} alt="Earth" className="rounded-md" style={{ maxWidth: "100%", maxHeight: "400px" }} />
+        )}
+      </div>
     </div>
   );
 };
