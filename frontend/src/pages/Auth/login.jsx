@@ -21,14 +21,14 @@ const Login = () => {
     if (!validateEmail(email)) return toast.error("Enter a valid email address");
     if (!validatePassword(password))
       return toast.error("Password must be at least 8 characters with an uppercase letter, special character, and number");
-
+  
     setLoading(true); // Set loading to true when the request starts
-
+  
     try {
       const { data } = await axios.post("https://nasa-dp3s.onrender.com/api/users/login", { email, password });
-
+  
       setLoading(false); // Set loading to false when the request is completed
-
+  
       if (data.success) {
         toast.success("User logged in successfully");
         setIsLoggedIn(true);
@@ -36,14 +36,17 @@ const Login = () => {
         localStorage.setItem("auth", JSON.stringify({ token: data.token, user: data.user }));
         navigate("/");
       } else {
-        toast.error("Failed to login user");
+        toast.error(data.message || "Failed to login user");
       }
     } catch (error) {
       setLoading(false); // Set loading to false in case of error
       console.error("Login error:", error.response || error.message);
-      toast.error("An error occurred. Please try again later.");
+  
+      // Check for specific error message from backend
+      const errorMessage = error.response?.data?.message || "An error occurred. Please try again later.";
+      toast.error(errorMessage);
     }
-  };
+  };  
 
   return (
     <div className="relative w-full h-screen">

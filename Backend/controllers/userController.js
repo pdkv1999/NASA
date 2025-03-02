@@ -90,7 +90,7 @@ const loginUser = async (req, res) => {
       logger.warn("Email or password is not valid during user login");
       return res.status(400).json({
         success: false,
-        message: "Email or password is not valid",
+        message: "Email or password is incorrect, please try again",
       });
     }
 
@@ -110,7 +110,7 @@ const loginUser = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "login successfully",
+      message: "Login successfully",
       user: {
         id: user.id,
         name: user.firstName,
@@ -122,6 +122,7 @@ const loginUser = async (req, res) => {
     handleError(res, error, "Error while logging in user");
   }
 };
+
 
 // Controller to get all users
 const getAllUsers = async (req, res) => {
