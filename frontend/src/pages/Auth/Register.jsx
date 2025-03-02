@@ -23,7 +23,7 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
       toast.error("All fields are required");
       return;
@@ -42,7 +42,7 @@ const Register = () => {
       toast.error("Passwords do not match");
       return;
     }
-
+  
     try {
       setLoading(true);  // Set loading to true when the request starts
       const response = await axios.post(
@@ -50,19 +50,25 @@ const Register = () => {
         { firstName, lastName, email, password }
       );
       setLoading(false);  // Set loading to false when the request is complete
-
+  
       if (response.data.success) {
         toast.success("User registered successfully");
         navigate("/login");
+      } else if (response.data.message === "User already exists") {
+        toast.error("User already exists. Please log in or use a different email.");
       } else {
         toast.error("Failed to register user");
       }
     } catch (error) {
       setLoading(false);  // Set loading to false in case of an error
-      toast.error("Error registering user:", error);
-      alert("An error occurred while registering. Please try again later.");
+      if (error.response && error.response.status === 409) {
+        toast.error("User already exists. Please log in or use a different email.");
+      } else {
+        toast.error("Error registering user: " + (error.message || error));
+      }
     }
   };
+  
 
   return (
     <div className="relative w-full h-screen">
