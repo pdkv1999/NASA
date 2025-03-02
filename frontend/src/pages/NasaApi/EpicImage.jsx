@@ -27,7 +27,7 @@ function Epic() {
     <div className="min-h-screen p-8" style={{ backgroundImage: 'url("/background.jpg")' }}>
       {loading ? (
         <div className="flex justify-center items-center h-screen">
-          <div className="rounded-full h-20 w-20 bg-[#9933FF] animate-ping"></div>
+          <div className="rounded-full h-20 w-20 bg-[#0000FF] animate-ping"></div>
         </div>
       ) : (
         <>

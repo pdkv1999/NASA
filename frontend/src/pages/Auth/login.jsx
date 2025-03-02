@@ -90,7 +90,7 @@ const Login = () => {
               {/* Submit Button */}
               <button
                 type="submit"
-                className="mt-5 tracking-wide font-semibold bg-gradient-to-r from-[#FF7E5F] to-[#FEB47B] text-gray-100 w-full py-4 rounded-lg hover:bg-gradient-to-r hover:from-[#FEB47B] hover:to-[#FF7E5F] transition-all duration-300 ease-in-out flex items-center justify-center"
+                className="mt-5 tracking-wide font-semibold bg-gradient-to-r from-[#FF7E5F] to-[#0000FF] text-gray-100 w-full py-4 rounded-lg hover:bg-gradient-to-r hover:from-[#0000FF] hover:to-[#FF7E5F] transition-all duration-300 ease-in-out flex items-center justify-center"
                 disabled={loading} // Disable the button while loading
               >
                 {loading ? (
@@ -112,7 +112,7 @@ const Login = () => {
               {/* Register Link */}
               <p className="mt-6 text-xs text-gray-600 text-center">
                 Already have an account?{" "}
-                <a href="/register" className="text-[#FEB47B] font-semibold">
+                <a href="/register" className="text-[#0000FF] font-semibold">
                   Register
                 </a>
               </p>

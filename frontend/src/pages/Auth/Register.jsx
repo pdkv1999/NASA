@@ -160,7 +160,7 @@ const Register = () => {
                 </div>
               ) : (
                 <button
-                  className="mt-5 tracking-wide font-semibold bg-gradient-to-r from-[#FF7E5F] to-[#FEB47B] text-gray-100 w-full py-4 rounded-lg hover:bg-gradient-to-r hover:from-[#FEB47B] hover:to-[#FF7E5F] transition-all duration-300 ease-in-out flex items-center justify-center"
+                  className="mt-5 tracking-wide font-semibold bg-gradient-to-r from-[#FF7E5F] to-[#0000FF] text-gray-100 w-full py-4 rounded-lg hover:bg-gradient-to-r hover:from-[#0000FF] hover:to-[#FF7E5F] transition-all duration-300 ease-in-out flex items-center justify-center"
                   onClick={handleSubmit}
                   disabled={loading}  // Disable button if loading
                 >
@@ -181,7 +181,7 @@ const Register = () => {
               )}
               <p className="mt-6 text-xs text-gray-600 text-center">
                 Already have an account?{" "}
-                <a href="/login" className="text-[#FEB47B] font-semibold">Login</a>
+                <a href="/login" className="text-[#0000FF] font-semibold">Login</a>
               </p>
             </div>
           </div>
