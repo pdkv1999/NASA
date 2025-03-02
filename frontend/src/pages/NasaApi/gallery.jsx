@@ -86,7 +86,11 @@ const Gallery = () => {
     <div className="container mx-auto px-4 py-8">
       {loading ? (
         <div className="flex justify-center items-center h-screen">
-          <div className="rounded-full h-20 w-20 bg-purple-500 animate-ping"></div>
+          <div className="flex space-x-2">
+            <div className="w-4 h-4 bg-purple-500 rounded-full animate-bounce delay-75"></div>
+            <div className="w-4 h-4 bg-purple-500 rounded-full animate-bounce delay-150"></div>
+            <div className="w-4 h-4 bg-purple-500 rounded-full animate-bounce delay-225"></div>
+          </div>
         </div>
       ) : (
         <div>
@@ -125,6 +129,14 @@ const Gallery = () => {
               Clear
             </button>
           </div>
+
+          {/* If no camera is selected */}
+          {!selectedCamera && (
+            <div className="text-center text-xl font-semibold text-red-500 mt-4">
+              Please select a camera to view images.
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {currentImages.length > 0 ? (
               currentImages.map((photo) => (
@@ -142,6 +154,7 @@ const Gallery = () => {
           </div>
         </div>
       )}
+
       {photos.length > 0 && (
         <div className="flex justify-center mt-4">
           <button

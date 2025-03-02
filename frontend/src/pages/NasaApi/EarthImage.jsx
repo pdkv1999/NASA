@@ -111,7 +111,11 @@ const EarthImage = () => {
 
       <div className="mt-5 flex justify-center items-center">
         {loading ? (
-          <div className="rounded-full h-20 w-20 bg-[#9933FF] animate-ping"></div>
+          <div className="flex space-x-2">
+            <div className="w-4 h-4 bg-white rounded-full animate-bounce delay-75"></div>
+            <div className="w-4 h-4 bg-white rounded-full animate-bounce delay-150"></div>
+            <div className="w-4 h-4 bg-white rounded-full animate-bounce delay-225"></div>
+          </div>
         ) : (
           imageUrl && <img src={imageUrl} alt="Earth" className="rounded-md" style={{ maxWidth: "100%", maxHeight: "400px" }} />
         )}
