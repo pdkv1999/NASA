@@ -88,6 +88,7 @@ const Register = () => {
                   type="text"
                   placeholder="Your first name"
                   required
+                  disabled={loading}  // Disable input if loading
                 />
                 <input
                   value={lastName}
@@ -96,6 +97,7 @@ const Register = () => {
                   type="text"
                   placeholder="Your last name"
                   required
+                  disabled={loading}  // Disable input if loading
                 />
               </div>
               <input
@@ -105,6 +107,7 @@ const Register = () => {
                 type="email"
                 placeholder="Enter your email"
                 required
+                disabled={loading}  // Disable input if loading
               />
 
               {/* Password Field */}
@@ -116,11 +119,13 @@ const Register = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter your password"
                   required
+                  disabled={loading}  // Disable input if loading
                 />
                 <button
                   type="button"
                   className="absolute inset-y-0 right-3 flex items-center text-gray-600"
                   onClick={togglePasswordVisibility}
+                  disabled={loading}  // Disable button if loading
                 >
                   {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -135,11 +140,13 @@ const Register = () => {
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="Confirm your password"
                   required
+                  disabled={loading}  // Disable input if loading
                 />
                 <button
                   type="button"
                   className="absolute inset-y-0 right-3 flex items-center text-gray-600"
                   onClick={toggleConfirmPasswordVisibility}
+                  disabled={loading}  // Disable button if loading
                 >
                   {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
@@ -155,6 +162,7 @@ const Register = () => {
                 <button
                   className="mt-5 tracking-wide font-semibold bg-gradient-to-r from-[#FF7E5F] to-[#FEB47B] text-gray-100 w-full py-4 rounded-lg hover:bg-gradient-to-r hover:from-[#FEB47B] hover:to-[#FF7E5F] transition-all duration-300 ease-in-out flex items-center justify-center"
                   onClick={handleSubmit}
+                  disabled={loading}  // Disable button if loading
                 >
                   <svg
                     className="w-6 h-6 -ml-2"
