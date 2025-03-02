@@ -98,7 +98,7 @@ const EarthImage = () => {
           <button
             type="submit"
             className={`px-4 py-2 rounded-md text-white ${
-              latitude && longitude && date ? "bg-[#0000FF] hover:bg-[#00B5B8]" : "bg-gray-400 cursor-not-allowed"
+              latitude && longitude && date ? "bg-[#A020F0] hover:bg-[#00B5B8]" : "bg-gray-400 cursor-not-allowed"
             }`}
             disabled={!latitude || !longitude || !date} // Disable button if fields are empty
           >
