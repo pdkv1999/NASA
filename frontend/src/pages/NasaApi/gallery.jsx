@@ -14,31 +14,32 @@ const options = {
   minites: "Miniature Thermal Emission Spectrometer (Mini-TES)",
 };
 
-const ITEMS_PER_PAGE = 6; // Set maximum items per page
+const ITEMS_PER_PAGE = 6;
 
 const Gallery = () => {
   const [photos, setPhotos] = useState([]);
-  const [searchCamera, setSearchCamera] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedCamera, setSelectedCamera] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const fetchPhotos = async () => {
+      if (!selectedCamera) return;
       setLoading(true);
       try {
         const response = await axios.get(
-          `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=${page}&api_key=${VITE_NASA_API_KEY}`
+          `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=${selectedCamera}&api_key=${VITE_NASA_API_KEY}`
         );
-        setPhotos(response.data.photos);
-
-        // Calculate total pages based on the number of photos
-        const total = response.data.photos.length;
-        setTotalPages(Math.ceil(total / ITEMS_PER_PAGE));
+        const fetchedPhotos = response.data.photos;
+        setPhotos(fetchedPhotos);
+        
+        // Ensure we calculate total pages based on actual data
+        const pages = fetchedPhotos.length > 0 ? Math.ceil(fetchedPhotos.length / ITEMS_PER_PAGE) : 1;
+        setTotalPages(pages);
+        setPage(1); // Reset page when a new camera is selected
       } catch (error) {
         console.error("Error fetching photos:", error);
       } finally {
@@ -47,7 +48,7 @@ const Gallery = () => {
     };
 
     fetchPhotos();
-  }, [page]);
+  }, [selectedCamera]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -59,47 +60,27 @@ const Gallery = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleSearch = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get(
-        `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=${searchCamera}&api_key=${VITE_NASA_API_KEY}`
-      );
-      setSearchResults(response.data.photos);
-      // Calculate total pages based on the number of search results
-      setTotalPages(Math.ceil(response.data.photos.length / ITEMS_PER_PAGE));
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const toggleDropDown = () => setIsOpen((prev) => !prev);
-
-  const handleOptionClick = (option) => {
-    setSelectedOption(option);
-    setSearchCamera(option);
+  const handleOptionClick = (camera) => {
+    setSelectedCamera(camera);
     setIsOpen(false);
-    setPage(1); // Reset to first page whenever a new camera option is selected
   };
 
   const clearSelection = () => {
-    setSelectedOption(null);
-    setSearchCamera("");
-    setSearchResults([]);
-    setPage(1); // Reset to first page when clearing the selection
-    setTotalPages(1); // Reset total pages when clearing the selection
+    setSelectedCamera("");
+    setPhotos([]);
+    setPage(1);
+    setTotalPages(1);
   };
 
-  const nextPage = () => setPage((prev) => Math.min(prev + 1, totalPages));
-  const prevPage = () => setPage((prev) => Math.max(1, prev - 1));
+  const nextPage = () => {
+    if (page < totalPages) setPage((prev) => prev + 1);
+  };
 
-  // Calculate images to display on the current page
-  const currentImages = (searchResults.length > 0 ? searchResults : photos).slice(
-    (page - 1) * ITEMS_PER_PAGE,
-    page * ITEMS_PER_PAGE
-  );
+  const prevPage = () => {
+    if (page > 1) setPage((prev) => prev - 1);
+  };
+
+  const currentImages = photos.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -110,17 +91,16 @@ const Gallery = () => {
       ) : (
         <div>
           <h1 className="text-center text-2xl lg:text-4xl font-semibold">Mars Rover Photos</h1>
-      
           <br />
           <div className="mb-4 flex flex-col md:flex-row justify-center items-center">
             <div className="relative w-full md:w-64 mb-2 md:mb-0 md:mr-2" ref={dropdownRef}>
               <input
                 type="text"
-                value={options[selectedOption] || ""}
+                value={options[selectedCamera] || ""}
                 readOnly
                 placeholder="Select camera"
                 className="border border-gray-300 rounded-md py-2 px-4 w-full cursor-pointer"
-                onClick={toggleDropDown}
+                onClick={() => setIsOpen((prev) => !prev)}
               />
               {isOpen && (
                 <div className="absolute z-10 mt-2 w-full bg-white rounded-md shadow-lg">
@@ -139,12 +119,6 @@ const Gallery = () => {
               )}
             </div>
             <button
-              onClick={handleSearch}
-              className="text-white bg-[#FEB47B] hover:bg-[#00B5B8] focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-              >
-              Search
-            </button>
-            <button
               onClick={clearSelection}
               className="bg-gray-300 hover:bg-gray-400 font-bold py-2 px-4 rounded-md"
             >
@@ -152,25 +126,43 @@ const Gallery = () => {
             </button>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {currentImages.map((photo) => (
-              <div key={photo.id} className="rounded-lg overflow-hidden shadow-lg bg-white">
-                <img className="w-full h-64 object-cover" src={photo.img_src} alt={photo.id} />
-                <div className="p-4">
-                  <p className="text-lg font-semibold">Rover: {photo.camera.full_name}</p>
-                  <p className="text-sm text-gray-700">Date: {photo.earth_date}</p>
+            {currentImages.length > 0 ? (
+              currentImages.map((photo) => (
+                <div key={photo.id} className="rounded-lg overflow-hidden shadow-lg bg-white">
+                  <img className="w-full h-64 object-cover" src={photo.img_src} alt={photo.id} />
+                  <div className="p-4">
+                    <p className="text-lg font-semibold">Rover: {photo.camera.full_name}</p>
+                    <p className="text-sm text-gray-700">Date: {photo.earth_date}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p className="text-center text-gray-500">No images available for this camera.</p>
+            )}
           </div>
         </div>
       )}
-      <div className="flex justify-center mt-4">
-        <button onClick={prevPage} disabled={page === 1} className="bg-gray-300 py-2 px-4 mr-2 rounded">Previous</button>
-        <p className="text-xl font-bold">
-          Page {page} of {totalPages}
-        </p>
-        <button onClick={nextPage} disabled={page === totalPages} className="bg-gray-300 py-2 px-4 ml-2 rounded">Next</button>
-      </div>
+      {photos.length > 0 && (
+        <div className="flex justify-center mt-4">
+          <button
+            onClick={prevPage}
+            disabled={page === 1}
+            className={`py-2 px-4 mr-2 rounded ${page === 1 ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 text-white hover:bg-blue-600"}`}
+          >
+            Previous
+          </button>
+          <p className="text-xl font-bold">
+            Page {page} of {totalPages}
+          </p>
+          <button
+            onClick={nextPage}
+            disabled={page >= totalPages}
+            className={`py-2 px-4 ml-2 rounded ${page >= totalPages ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 text-white hover:bg-blue-600"}`}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };
