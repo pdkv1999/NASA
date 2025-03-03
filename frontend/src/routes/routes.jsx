@@ -11,7 +11,6 @@ import Gallery from "../pages/NasaApi/gallery";
 import APODViewer from "../pages/NasaApi/APODViewer";
 import EarthImage from "../pages/NasaApi/EarthImage";
 import Epic from "../pages/NasaApi/EpicImage";
-import { useAuth } from "../context/AuthContext";
 
 const PrivateRoute = ({ Component }) => {
   const isLoggedIn = JSON.parse(localStorage.getItem("isLoggedIn"));

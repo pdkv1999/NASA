@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, waitFor, screen, fireEvent } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import axios from 'axios';
 import Gallery from '../pages/NasaApi/gallery';
 
