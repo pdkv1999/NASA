@@ -4,7 +4,7 @@
 
 Cosmic Explorer is a web-based application that utilizes NASA APIs to deliver a range of astronomical data and stunning imagery. Users can create an account, sign in, and explore various features such as the Astronomy Picture of the Day (APOD), Mars Rover Photos, EPIC (Earth Polychromatic Imaging Camera), and Earth imagery.
 
-You can access the live application here: [Cosmic Explorer](https://nasa-snowy.vercel.app/)
+You can access the live application here: [Cosmic Explorer](https://nasa-dileep.vercel.app/)
 
 vercel account: [vercel](https://vercel.com/dileep-kumar-varma-penmetsas-projects/nasa)
 <img width="1470" alt="image" src="https://github.com/user-attachments/assets/a916db80-00cb-47e5-afe9-be9f83aeb136" />
