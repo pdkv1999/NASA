@@ -9,7 +9,7 @@ const port = process.env.PORT || 8090;
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://nasa-snowy.vercel.app"],
+    origin: ["https://nasa-alpha.vercel.app/"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
