@@ -1,17 +1,19 @@
-const User = require("../models/userModel");
-const logger = require("../utils/logger");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { isValidEmail, validatePassword } = require("../utils/commonFunctions");
+// Importing necessary modules
+const User = require("../models/userModel");               // Mongoose model for User
+const logger = require("../utils/logger");                 // Custom logger for logging errors and warnings
+const bcrypt = require("bcrypt");                          // Library for password hashing
+const jwt = require("jsonwebtoken");                       // Library for generating JSON Web Tokens
+const { isValidEmail, validatePassword } = require("../utils/commonFunctions"); // Custom functions for email and password validation
 
-// Helper function to handle errors
+// Helper function to handle errors consistently
 const handleError = (res, error, message) => {
-  logger.error(message, error);
-  res.status(500).json({ success: false, message, error: error.message });
+  logger.error(message, error);                            // Logging error message with stack trace
+  res.status(500).json({ success: false, message, error: error.message }); // Sending error response
 };
 
 // Controller to register a new user
 const registerUser = async (req, res) => {
+  // Extracting user details from request body
   const { firstName, lastName, email, password } = req.body;
 
   try {
@@ -23,7 +25,7 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // Validate email format
+    // Validate email format using custom function
     if (!isValidEmail(email)) {
       return res.status(400).json({
         success: false,
@@ -31,7 +33,7 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // Validate password
+    // Validate password strength using custom function
     if (!validatePassword(password)) {
       return res.status(400).json({
         success: false,
@@ -39,7 +41,7 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // Check if user already exists
+    // Check if user already exists in the database
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(409).json({
@@ -48,8 +50,8 @@ const registerUser = async (req, res) => {
       });
     }
 
-    // Hash password and create user
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Hash password before storing in the database
+    const hashedPassword = await bcrypt.hash(password, 10); // Salt rounds set to 10 for security
     const user = await User.create({
       firstName,
       lastName,
@@ -57,8 +59,10 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
     });
 
+    // Sending success response
     res.status(201).json({ success: true, message: "New user created", data: user });
   } catch (error) {
+    // Error handling using helper function
     handleError(res, error, "Error while registering user");
   }
 };
@@ -84,7 +88,7 @@ const loginUser = async (req, res) => {
       });
     }
 
-    // Find the user by email
+    // Find user by email and validate password
     const user = await User.findOne({ email });
     if (!user || !(await bcrypt.compare(password, user.password))) {
       logger.warn("Email or password is not valid during user login");
@@ -94,7 +98,7 @@ const loginUser = async (req, res) => {
       });
     }
 
-    // Generate access token
+    // Generate access token with a 15-minute expiration
     const token = jwt.sign(
       {
         user: {
@@ -108,6 +112,7 @@ const loginUser = async (req, res) => {
       { expiresIn: "15m" }
     );
 
+    // Sending success response with token
     res.status(200).json({
       success: true,
       message: "Login successfully",
@@ -123,17 +128,17 @@ const loginUser = async (req, res) => {
   }
 };
 
-
 // Controller to get all users
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find();   // Fetching all users from the database
     res.status(200).json({ success: true, message: "Users retrieved", data: users });
   } catch (error) {
     handleError(res, error, "Error while retrieving users");
   }
 };
 
+// Exporting controller functions
 module.exports = {
   registerUser,
   loginUser,

@@ -1,3 +1,8 @@
+/* Importing Tailwind's base styles (CSS resets and core styles) */
 @tailwind base;
+
+/* Importing Tailwind's pre-built component styles */
 @tailwind components;
+
+/* Importing Tailwind's utility classes for margin, padding, etc. */
 @tailwind utilities;

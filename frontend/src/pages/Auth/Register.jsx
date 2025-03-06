@@ -1,29 +1,37 @@
+// Importing necessary modules and hooks
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { validateEmail, validatePassword } from "../../utils/commonFunctions";
-import axios from "axios";
-import { toast } from 'react-toastify';
-import { Eye, EyeOff } from "lucide-react";
-import { FaSpinner } from 'react-icons/fa';  // For the loading spinner
+import { useNavigate } from "react-router-dom";        // For navigation
+import { validateEmail, validatePassword } from "../../utils/commonFunctions"; // Validation functions
+import axios from "axios";                             // For HTTP requests
+import { toast } from 'react-toastify';                 // For notifications
+import { Eye, EyeOff } from "lucide-react";             // Eye icons for password visibility toggle
+import { FaSpinner } from 'react-icons/fa';             // Spinner for loading state
 
+// Register component definition
 const Register = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [loading, setLoading] = useState(false);  // Add loading state
-  const navigate = useNavigate();
+  // State variables for form data and UI behavior
+  const [firstName, setFirstName] = useState("");       // State for first name
+  const [lastName, setLastName] = useState("");         // State for last name
+  const [email, setEmail] = useState("");               // State for email
+  const [password, setPassword] = useState("");         // State for password
+  const [confirmPassword, setConfirmPassword] = useState(""); // State for confirming password
+  const [showPassword, setShowPassword] = useState(false);    // Toggle password visibility
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // Toggle confirm password visibility
+  const [loading, setLoading] = useState(false);        // Loading state for form submission
+  const navigate = useNavigate();                       // For page navigation
+
+  // Enabling cookies with axios requests
   axios.defaults.withCredentials = true;
 
+  // Functions to toggle password visibility
   const togglePasswordVisibility = () => setShowPassword(!showPassword);
   const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
 
+  // Function to handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
+    // Client-side form validation
     if (!firstName || !lastName || !email || !password || !confirmPassword) {
       toast.error("All fields are required");
       return;
@@ -33,34 +41,35 @@ const Register = () => {
       return;
     }
     if (!validatePassword(password)) {
-      toast.error(
-        "Password must be at least 8 characters long and contain at least one uppercase letter, one special character, and one number"
-      );
+      toast.error("Password must be at least 8 characters long and contain at least one uppercase letter, one special character, and one number");
       return;
     }
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
-  
+
     try {
-      setLoading(true);  // Set loading to true when the request starts
+      setLoading(true);  // Show loading spinner
+
+      // Sending registration request to the backend
       const response = await axios.post(
         "https://nasa-dp3s.onrender.com/api/users/register",
         { firstName, lastName, email, password }
       );
-      setLoading(false);  // Set loading to false when the request is complete
-  
+      setLoading(false);  // Stop loading spinner
+
+      // Handling registration response
       if (response.data.success) {
         toast.success("User registered successfully");
-        navigate("/login");
+        navigate("/login");  // Redirect to login page
       } else if (response.data.message === "User already exists") {
         toast.error("User already exists. Please log in or use a different email.");
       } else {
         toast.error("Failed to register user");
       }
     } catch (error) {
-      setLoading(false);  // Set loading to false in case of an error
+      setLoading(false);  // Stop loading spinner in case of error
       if (error.response && error.response.status === 409) {
         toast.error("User already exists. Please log in or use a different email.");
       } else {
@@ -68,8 +77,8 @@ const Register = () => {
       }
     }
   };
-  
 
+  // Returning JSX for the Register component
   return (
     <div className="relative w-full h-screen">
       <video
@@ -86,7 +95,7 @@ const Register = () => {
           <h1 className="text-center text-xl sm:text-3xl font-semibold text-black">Register now</h1>
           <div className="w-full mt-8">
             <div className="mx-auto max-w-xs sm:max-w-md md:max-w-lg flex flex-col gap-4">
-              <div className="flex flex-col sm:flex-row gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
                 <input
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
@@ -197,4 +206,5 @@ const Register = () => {
   );
 };
 
+// Exporting Register component
 export default Register;

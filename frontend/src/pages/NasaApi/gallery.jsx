@@ -1,7 +1,9 @@
+// Importing necessary modules and hooks
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import VITE_NASA_API_KEY from "../../config/apiConfig";
+import VITE_NASA_API_KEY from "../../config/apiConfig";  // Importing NASA API key
 
+// Camera options for the dropdown
 const options = {
   fhaz: "Front Hazard Avoidance Camera",
   rhaz: "Rear Hazard Avoidance Camera",
@@ -14,42 +16,48 @@ const options = {
   minites: "Miniature Thermal Emission Spectrometer (Mini-TES)",
 };
 
+// Constants for pagination
 const ITEMS_PER_PAGE = 6;
 
+// Gallery component definition
 const Gallery = () => {
-  const [photos, setPhotos] = useState([]);
-  const [selectedCamera, setSelectedCamera] = useState("");
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const dropdownRef = useRef(null);
-  const [isOpen, setIsOpen] = useState(false);
+  // State variables for managing component data
+  const [photos, setPhotos] = useState([]);                     // State for storing photos
+  const [selectedCamera, setSelectedCamera] = useState("");      // State for selected camera
+  const [page, setPage] = useState(1);                          // State for current page
+  const [totalPages, setTotalPages] = useState(1);               // State for total pages
+  const [loading, setLoading] = useState(false);                 // State for loading indicator
+  const dropdownRef = useRef(null);                             // Ref for dropdown
+  const [isOpen, setIsOpen] = useState(false);                   // State for dropdown visibility
 
+  // Fetch photos when selectedCamera changes
   useEffect(() => {
     const fetchPhotos = async () => {
-      if (!selectedCamera) return;
+      if (!selectedCamera) return;                              // Return if no camera selected
       setLoading(true);
       try {
+        // Fetching data from NASA API
         const response = await axios.get(
           `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&camera=${selectedCamera}&api_key=${VITE_NASA_API_KEY}`
         );
         const fetchedPhotos = response.data.photos;
         setPhotos(fetchedPhotos);
-        
-        // Ensure we calculate total pages based on actual data
+
+        // Calculate total pages based on data length
         const pages = fetchedPhotos.length > 0 ? Math.ceil(fetchedPhotos.length / ITEMS_PER_PAGE) : 1;
         setTotalPages(pages);
-        setPage(1); // Reset page when a new camera is selected
+        setPage(1);                                             // Reset to first page on camera change
       } catch (error) {
-        console.error("Error fetching photos:", error);
+        console.error("Error fetching photos:", error);          // Log any errors
       } finally {
-        setLoading(false);
+        setLoading(false);                                      // Hide loading spinner
       }
     };
 
-    fetchPhotos();
-  }, [selectedCamera]);
+    fetchPhotos();                                               // Call fetch function
+  }, [selectedCamera]);                                          // Dependency on selectedCamera
 
+  // Close dropdown if clicked outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -60,11 +68,13 @@ const Gallery = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Handle camera selection from dropdown
   const handleOptionClick = (camera) => {
     setSelectedCamera(camera);
-    setIsOpen(false);
+    setIsOpen(false);                                            // Close dropdown
   };
 
+  // Clear camera selection and reset states
   const clearSelection = () => {
     setSelectedCamera("");
     setPhotos([]);
@@ -72,6 +82,7 @@ const Gallery = () => {
     setTotalPages(1);
   };
 
+  // Pagination functions
   const nextPage = () => {
     if (page < totalPages) setPage((prev) => prev + 1);
   };
@@ -80,11 +91,14 @@ const Gallery = () => {
     if (page > 1) setPage((prev) => prev - 1);
   };
 
+  // Slice photos for current page
   const currentImages = photos.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
+  // Returning JSX for the Gallery component
   return (
     <div className="container mx-auto px-4 py-8">
       {loading ? (
+        // Loading spinner
         <div className="flex justify-center items-center h-screen">
           <div className="flex space-x-2">
             <div className="w-4 h-4 bg-purple-500 rounded-full animate-bounce delay-75"></div>
@@ -94,6 +108,7 @@ const Gallery = () => {
         </div>
       ) : (
         <div>
+          {/* Header and Dropdown */}
           <h1 className="text-center text-2xl lg:text-4xl font-semibold">Mars Rover Photos</h1>
           <br />
           <div className="mb-4 flex flex-col md:flex-row justify-center items-center">
@@ -180,4 +195,5 @@ const Gallery = () => {
   );
 };
 
+// Exporting Gallery component
 export default Gallery;
