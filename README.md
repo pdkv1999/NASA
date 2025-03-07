@@ -50,7 +50,7 @@ vercel account: [vercel](https://vercel.com/dileep-kumar-varma-penmetsas-project
 
 ## Installation Guide
 
-To run Cosmic Explorer locally, ensure you have [Node.js](https://nodejs.org/) installed.
+To run this project locally, ensure you have [Node.js](https://nodejs.org/) installed.
 
 ### Cloning the Repository
 ```sh
