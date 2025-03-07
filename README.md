@@ -1,8 +1,13 @@
+# Install visual studio code and install all the below extensions, it will be life saver.
+```sh
+https://www.howtogeek.com/vs-code-extensions-i-cant-live-without/
+```
+
 # Requested for NASA API KEY
 <img width="852" alt="image" src="https://github.com/user-attachments/assets/23062d56-770b-457d-a46e-d4a8ce552981" />
-# Cosmic Explorer
+# NASA API Project
 
-Cosmic Explorer is a web-based application that utilizes NASA APIs to deliver a range of astronomical data and stunning imagery. Users can create an account, sign in, and explore various features such as the Astronomy Picture of the Day (APOD), Mars Rover Photos, EPIC (Earth Polychromatic Imaging Camera), and Earth imagery.
+It is a web-based application that utilizes NASA APIs to deliver a range of astronomical data and stunning imagery. Users can create an account, sign in, and explore various features such as the Astronomy Picture of the Day (APOD), Mars Rover Photos, EPIC (Earth Polychromatic Imaging Camera), and Earth imagery.
 
 You can access the live application here: [Cosmic Explorer](https://nasa-eight-gules.vercel.app/)
 
