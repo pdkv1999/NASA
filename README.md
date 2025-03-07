@@ -117,7 +117,8 @@ npm run dev
 
 - Unit Testing with Jest: 
 ```sh
-npm test <Unit-test-file-name>.test.js/npm test <Integration-test-file-name>.test.js
+npm test <Unit-test-file-name>.test.js
+npm test <Integration-test-file-name>.test.js
 ```
 
 ### Contributing
