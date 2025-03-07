@@ -97,7 +97,7 @@ const Gallery = () => {
   // Returning JSX for the Gallery component
 // Returning JSX for the Gallery component
 return (
-  <div className="container mx-auto px-4 py-8">
+  <div className="container mx-auto px-4 py-8 relative">
     {/* Header and Dropdown - Always Visible */}
     <h1 className="text-center text-2xl lg:text-4xl font-semibold">Mars Rover Photos</h1>
     <br />
@@ -142,9 +142,9 @@ return (
       </div>
     )}
 
-    {/* Loading Spinner - Positioned Below the Content */}
+    {/* Loading Spinner - Centered on the page */}
     {loading && (
-      <div className="flex justify-center items-center my-4">
+      <div className="fixed inset-0 flex justify-center items-center bg-white bg-opacity-80 z-50">
         <div className="flex space-x-2">
           <div className="w-4 h-4 bg-purple-500 rounded-full animate-bounce delay-75"></div>
           <div className="w-4 h-4 bg-purple-500 rounded-full animate-bounce delay-150"></div>
@@ -155,44 +155,46 @@ return (
 
     {/* Photos Grid - Hidden if Loading */}
     {!loading && (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {currentImages.length > 0 ? (
-          currentImages.map((photo) => (
-            <div key={photo.id} className="rounded-lg overflow-hidden shadow-lg bg-white">
-              <img className="w-full h-64 object-cover" src={photo.img_src} alt={photo.id} />
-              <div className="p-4">
-                <p className="text-lg font-semibold">Rover: {photo.camera.full_name}</p>
-                <p className="text-sm text-gray-700">Date: {photo.earth_date}</p>
+      <>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {currentImages.length > 0 ? (
+            currentImages.map((photo) => (
+              <div key={photo.id} className="rounded-lg overflow-hidden shadow-lg bg-white">
+                <img className="w-full h-64 object-cover" src={photo.img_src} alt={photo.id} />
+                <div className="p-4">
+                  <p className="text-lg font-semibold">Rover: {photo.camera.full_name}</p>
+                  <p className="text-sm text-gray-700">Date: {photo.earth_date}</p>
+                </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <p className="text-center text-gray-500">No images available for this camera.</p>
-        )}
-      </div>
-    )}
+            ))
+          ) : (
+            <p className="text-center text-gray-500">No images available for this camera.</p>
+          )}
+        </div>
 
-    {/* Pagination Controls */}
-    {photos.length > 0 && (
-      <div className="flex justify-center mt-4">
-        <button
-          onClick={prevPage}
-          disabled={page === 1}
-          className={`py-2 px-4 mr-2 rounded ${page === 1 ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 text-white hover:bg-blue-600"}`}
-        >
-          Previous
-        </button>
-        <p className="text-xl font-bold">
-          Page {page} of {totalPages}
-        </p>
-        <button
-          onClick={nextPage}
-          disabled={page >= totalPages}
-          className={`py-2 px-4 ml-2 rounded ${page >= totalPages ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 text-white hover:bg-blue-600"}`}
-        >
-          Next
-        </button>
-      </div>
+        {/* Pagination Controls - Visible Only When Not Loading */}
+        {photos.length > 0 && (
+          <div className="flex justify-center mt-4">
+            <button
+              onClick={prevPage}
+              disabled={page === 1}
+              className={`py-2 px-4 mr-2 rounded ${page === 1 ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 text-white hover:bg-blue-600"}`}
+            >
+              Previous
+            </button>
+            <p className="text-xl font-bold">
+              Page {page} of {totalPages}
+            </p>
+            <button
+              onClick={nextPage}
+              disabled={page >= totalPages}
+              className={`py-2 px-4 ml-2 rounded ${page >= totalPages ? "bg-gray-300 cursor-not-allowed" : "bg-blue-500 text-white hover:bg-blue-600"}`}
+            >
+              Next
+            </button>
+          </div>
+        )}
+      </>
     )}
   </div>
 );
