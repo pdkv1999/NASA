@@ -113,8 +113,12 @@ npm run dev
 }
 ```
 
-###Testing
-Unit Testing with Jest: npm test <Unit-test-file-name>.test.js/npm test <Integration-test-file-name>.test.js
+### Testing
+
+- Unit Testing with Jest: 
+```sh
+npm test <Unit-test-file-name>.test.js/npm test <Integration-test-file-name>.test.js
+```
 
 ### Contributing
 
